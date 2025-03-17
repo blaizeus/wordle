@@ -41,4 +41,7 @@ class Word(models.Model):
 
     @staticmethod
     def get_selected_word():
+        todays_word = Word.objects.filter(date_selected=datetime.now().date())
+        if not todays_word.exists():
+            Word().select_word()
         return Word.objects.get(date_selected=datetime.now().date()).value
