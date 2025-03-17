@@ -141,6 +141,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
 ]
 
-PROD_FRONTEND_URL = os.environ.get("REACT_APP_FRONTEND_URL", "http://localhost:3000")
+PROD_FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:3000")
 if PROD_FRONTEND_URL not in CORS_ALLOWED_ORIGINS:
     CORS_ALLOWED_ORIGINS.append(PROD_FRONTEND_URL)
