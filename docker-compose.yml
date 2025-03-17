@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: wordle_database
+    volumes:
+      - ./init_db:/docker-entrypoint-initdb.d/
+    ports:
+      - "5423:5432"
+    env_file:
+      - .env
+
+  backend:
+    build: ./backend
+    container_name: wordle_backend
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend:/app
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    command: /start.sh
+    entrypoint: /entrypoint.sh
+
+  frontend:
+    build: ./frontend
+    container_name: wordle_frontend
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend/app:/app/app
+      - ./frontend/public:/app/public
+    ports:
+      - "3000:3000"
+    command: npm run start
